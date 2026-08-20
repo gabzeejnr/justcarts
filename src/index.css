@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+html {
+    scrollbar-width: none;
+}
+
+.hero {
+    background: url("./assets/slide-1.jpg") center / cover no-repeat;
+}
+
+.hero .big-text {
+    letter-spacing: 2px;
+    font-weight: 640;
+}

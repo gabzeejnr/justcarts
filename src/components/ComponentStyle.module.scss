@@ -1,0 +1,23 @@
+.wrapper {
+
+    .image-holder {
+        transition: all 200ms;
+
+        img {
+            transition: all 200ms;
+        }
+    }
+
+    &:hover {
+
+        .image-holder {
+            /* hover:h-80 hover:z-50 */
+            height: 20rem;
+            z-index: 50;
+
+            img {
+                height: 20rem;
+            }
+        }
+    }
+}
