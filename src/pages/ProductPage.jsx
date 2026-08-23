@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../api/axios";
+import { useCart } from "../context/CartContext";
 
 export default function ProductPage() {
 
+    // ========================================================================================= \\
+    // STATES & VARIABLES =======================
+    // ========================================================================================= \\
+
     const { id } = useParams();
-    const [quantity, setQuantity] = useState(1);
+    const { addToCart, increaseQuantity, decreaseQuantity, getQuantity } = useCart();
     const [product, setProduct] = useState(null)
 
+
+    // ========================================================================================= \\
+    // EFFECTS & FUNCTIONS ======================
+    // ========================================================================================= \\
     useEffect(() => {
         getProduct(id);
     }, [id])
@@ -15,8 +24,8 @@ export default function ProductPage() {
     async function getProduct(id) {
         try {
             const { data } = await api.get(`/products/${id}`);
-            setProduct(data);
             console.log(data);
+            setProduct(data);
         } catch (err) {
             console.error("Error getting product data:", err);
         }
@@ -28,14 +37,6 @@ export default function ProductPage() {
             currency: product.currency || "USD",
         }).format(product.price)
         : null;
-
-    const increaseQuantity = () => {
-        setQuantity((prev) => prev + 1);
-    };
-
-    const decreaseQuantity = () => {
-        setQuantity((prev) => Math.max(1, prev - 1));
-    };
 
     return (
         product ? (
@@ -63,7 +64,7 @@ export default function ProductPage() {
 
                             <div className="flex min-h-100 items-center justify-center p-6 sm:p-10 lg:min-h-162.5">
                                 <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-white">
-                                    <img src={product.image_url} alt={product.name}
+                                    <img src={product.image} alt={product.name}
                                         className="h-full max-h-150 w-full object-contain p-6 transition duration-500 hover:scale-105 sm:p-10" />
                                 </div>
                             </div>
@@ -117,15 +118,15 @@ export default function ProductPage() {
                                     </p>
 
                                     <div className="flex w-fit items-center overflow-hidden rounded-xl border border-gray-200">
-                                        <button onClick={decreaseQuantity}
+                                        <button onClick={() => decreaseQuantity(product)}
                                             className="flex h-11 w-11 items-center justify-center text-xl text-gray-600 transition hover:bg-gray-100">
                                             −</button>
 
                                         <span className="flex h-11 w-12 items-center justify-center border-x border-gray-200 text-sm font-semibold">
-                                            {quantity}
+                                            {getQuantity(product)}
                                         </span>
 
-                                        <button onClick={increaseQuantity}
+                                        <button onClick={() => increaseQuantity(product)}
                                             className="flex h-11 w-11 items-center justify-center text-xl text-gray-600 transition hover:bg-gray-100">
                                             +
                                         </button>
@@ -133,7 +134,8 @@ export default function ProductPage() {
                                 </div>
 
                                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                                    <button className="flex-1 rounded-xl bg-black px-6 py-4 font-semibold text-white transition hover:bg-gray-800 active:scale-[0.98]">
+                                    <button className="flex-1 rounded-xl bg-black px-6 py-4 font-semibold text-white transition hover:bg-gray-800 active:scale-[0.98]"
+                                        onClick={() => addToCart(product)}>
                                         Add to Cart
                                     </button>
 
@@ -142,7 +144,6 @@ export default function ProductPage() {
                                     </button>
                                 </div>
 
-                                {/* Optional Product Information */}
                                 {(product.availability ||
                                     product.shipping_info ||
                                     product.warranty_info ||

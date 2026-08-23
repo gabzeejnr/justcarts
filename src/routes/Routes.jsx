@@ -6,11 +6,17 @@ import Home from "../pages/Home";
 import ProductPage from "../pages/ProductPage";
 import Categories from "../pages/Categories";
 import Category from "../pages/Category";
+import OtpVerification from "../pages/OtpVerification";
+import AuthLayout from "../layouts/AuthLayout";
 
 export default function RoutePage() {
     return (
         <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/auth/" element={<AuthLayout />}>
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Registration />} />
+                <Route path="otp_verification" element={<OtpVerification />} />
+            </Route>
             <Route path="/" element={<MainLayout />}>
                 <Route index element={<Home />} />
                 <Route path="products" element={<Home />} />
