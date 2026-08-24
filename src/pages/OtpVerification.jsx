@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Toast from "../components/Auth/Toast";
 import api from "../api/axios";
+import ThemeButton from "../components/ThemeButton";
 
 export default function OtpVerification() {
 
@@ -10,25 +11,22 @@ export default function OtpVerification() {
     const [loading, setLoading] = useState(false);
 
     const email = localStorage.getItem("email");
-    const regToken = localStorage.getItem("reg-token");
 
     async function handleSendCode() {
         setLoading(true);
         setToast(null);
 
         try {
-            await api.post("/auth/send_registration_code", { email }, {
-                headers: { Authorization: `Bearer ${regToken}` }
-            })
+            await api.post("/auth/send_registration_code", { email })
             setCodeSent(true);
             setToast({
                 type: "success",
-                text: "Confirmation code sent successfully"
+                text: data.message || "Confirmation code sent successfully"
             })
         } catch (err) {
             console.error("Error sending OTP:", err);
             setToast({
-                type: "failure",
+                type: "error",
                 text: err.response?.data?.error || "Couldn't send confirmation code."
             })
         } finally {
@@ -52,9 +50,7 @@ export default function OtpVerification() {
 
         try {
 
-            const { data } = await api.post("/auth/otp_verification", { otp }, {
-                headers: { Authorization: `Bearer ${regToken}` }
-            });
+            const { data } = await api.post("/auth/otp_verification", { otp });
             console.log(data);
 
             setToast({
@@ -76,7 +72,7 @@ export default function OtpVerification() {
     return (
         <>
             <div className="mb-3 mt-2">
-                <h1 className="mb-2 font-semibold text-xl">OTP VERIFICATION</h1>
+                <h1 className="mb-2 font-semibold text-xl text-[#0AAD0A]">OTP VERIFICATION</h1>
             </div>
             <Toast toast={toast} />
 
@@ -86,10 +82,8 @@ export default function OtpVerification() {
                         We'll send a 6-digit confirmation code to{" "}
                         <strong>{email}</strong>
                     </div>
-                    <button type="button" onClick={handleSendCode} disabled={loading}
-                        className={`border border-green-500 rounded-xl w-full py-3
-                        bg-green-700 text-white font-medium text-lg
-                        ${loading ? "cursor-not-allowed opacity-70" : ""}`}>{loading ? "SENDING..." : "SEND CODE"}</button>
+                    <ThemeButton type="button" onClick={handleSendCode} disabled={loading}
+                        value="SEND CODE" loadingValue="SENDING..." />
                 </div>
             ) : (
                 < form className="space-y-5">

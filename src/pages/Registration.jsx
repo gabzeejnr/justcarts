@@ -5,9 +5,14 @@ import FormCard from "../components/Auth/FormCard";
 import PasswordHolder from "../components/Auth/PasswordHolder";
 import InputHolder from "../components/Auth/InputHolder";
 import Toast from "../components/Auth/Toast";
+import ThemeButton from "../components/ThemeButton";
 
 
 export default function Registration() {
+
+    // ============================================================================================
+    // STATES & VARIABLES =======================
+    // ============================================================================================
 
     const navigate = useNavigate();
     const [form, setForm] = useState({
@@ -20,7 +25,7 @@ export default function Registration() {
     const [toast, setToast] = useState({});
     const labelStyle = "block text-sm font-medium text-gray-700 mb-1";
     const inputStyle = "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black";
-    const passwordInput = "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black tracking-[0.2em] font-semibold";
+    const passwordInput = "w-full pr-10 rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#0AAD0A] focus:ring-1 focus:ring-[#0AAD0A] tracking-[0.2em] font-semibold";
     const requirements = [
         {
             label: "At least 8 characters",
@@ -44,6 +49,9 @@ export default function Registration() {
         }
     ];
 
+    // ============================================================================================
+    // EFFECTS & FUNCTIONS ======================
+    // ============================================================================================
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -51,8 +59,6 @@ export default function Registration() {
         setLoading(true);
         try {
             const { data } = await api.post("/auth/register", form);
-
-            localStorage.setItem("reg-token", data.token);
             localStorage.setItem("email", data.email);
 
             setToast({
@@ -74,7 +80,7 @@ export default function Registration() {
             });
             setTimeout(() => {
                 setToast({})
-            }, 3000);
+            }, 5000);
         } finally {
             setLoading(false);
         };
@@ -83,12 +89,14 @@ export default function Registration() {
     return (
         <section className="pb-5">
             <div className="mb-5">
-                <h2 className="mb-1 font-semibold text-xl">Create Account</h2>
-                <h3 className="text-xs font-extralight tracking-wide">Create your JustCarts account</h3>
+                <h2 className="mb-1 font-semibold text-xl text-[#0AAD0A]">Create Account</h2>
+                <h3 className="text-xs font-extralight tracking-wide text-[#0AAD0A]">Create your JustCarts account</h3>
             </div>
 
             {toast?.type && toast?.text && (
-                <Toast toast={toast} />
+                <div className="mb-3">
+                    <Toast toast={toast} />
+                </div>
             )}
 
             <form className="space-y-5" onSubmit={handleSubmit}>
@@ -116,17 +124,18 @@ export default function Registration() {
                     className={passwordInput} onChange={(e) => setForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
                 />
                 {form.password !== form.confirmPassword && form.confirmPassword.length !== 0 && form.password.length >= 8 && (
-                    <div className="-mt-6 w-full text-pretty text-sm text-red-500">Passwords do not match</div>
+                    <div className="-mt-5 w-full text-pretty text-sm text-red-500">Passwords do not match</div>
                 )}
                 <div className="flex gap-2">
                     <input type="checkbox" id="TC" required />
                     <label htmlFor="TC" className="block text-sm font-medium text-gray-700">I agree to the <Link className="decoration-dashed">Terms & Privacy Policy</Link>
                     </label>
                 </div>
-                <button type="submit" disabled={loading}
-                    className={`rounded-xl w-full py-3 ring-1 ring-gray-500
-                    ${loading ? "cursor-not-allowed bg-gray-100" : "cursor-pointer bg-gray-300"}`}>CREATE ACCOUNT</button>
+                <ThemeButton type="submit" disabled={loading} value="CREATE ACCOUNT" />
             </form>
+            <div className="mt-3 text-[14px]">Already have an account? {""}
+                <Link to="/auth/login" className="text-[#0AAD0A]">Login</Link>
+            </div>
         </section>
     )
 }

@@ -19,7 +19,7 @@ export default function PasswordHolder({
             <div className="relative">
                 <input type={isClosed ? "password" : "text"} id={id} value={value} placeholder={isClosed ? "••••••" : "password"} required={required}
                     onChange={onChange} {...props} />
-                <button onClick={() => setIsClosed(prev => !prev)}
+                <button onClick={() => setIsClosed(prev => !prev)} type="button"
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 hover:text-black">
                     {isClosed ? <EyeOff /> : <Eye />}
                 </button>

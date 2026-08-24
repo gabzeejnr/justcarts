@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import SearchBar from "./SearchBar";
 import { brandLogo, brandName } from "../../data/companyData";
@@ -9,9 +9,19 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
 
+    // ============================================================================================
+    // STATES & VARIABLES =======================
+    // ============================================================================================
+
     const { cart } = useCart();
+    const navigate = useNavigate();
     const [userModal, setUserModal] = useState(false);
     const [likeCount, setLikeCount] = useState(Number(1));
+
+
+    // ============================================================================================
+    // EFFECTS & FUNCTIONS ======================
+    // ============================================================================================
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -40,7 +50,8 @@ export default function Header() {
                 <button>
                     <User />
                 </button>
-                <button className="relative">
+                <button className="relative cursor-pointer"
+                    onClick={() => navigate("/cart")}>
                     <div className={`bg-[#0AAD0A] h-4 text-xs px-1 rounded-4xl text-white
                         absolute -top-2 left-1/2 `}>{cart.length}</div>
                     <ShoppingBag />
