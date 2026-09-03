@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
-import FormCard from "../components/Auth/FormCard";
 import Toast from "../components/Auth/Toast";
 import InputHolder from "../components/Auth/InputHolder";
 import PasswordHolder from "../components/Auth/PasswordHolder";
@@ -13,8 +12,8 @@ export default function Login() {
     // STATES & VARIABLES =======================
     // ============================================================================================
 
+    const navigate = useNavigate();
     const [form, setForm] = useState({
-        name: "",
         email: "",
         password: ""
     });
@@ -23,17 +22,8 @@ export default function Login() {
         type: "",
         text: ""
     });
-    const registrationToken = localStorage.getItem("reg-token");
     const labelStyle = "block text-sm font-medium text-gray-700 mb-1";
     const passwordInput = "w-full pr-10 rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#0AAD0A] focus:ring-1 focus:ring-[#0AAD0A] tracking-[0.2em] font-semibold";
-
-    // if (registrationToken) {
-    //     setToast({
-    //         type: "error",
-    //         text: "Please finish verification before logging in."
-    //     });
-    //     return;
-    // }
 
 
     // ============================================================================================
@@ -41,30 +31,28 @@ export default function Login() {
     // ============================================================================================
 
     async function handleLogin(e) {
-        if (registrationToken) {
-            e.preventDefault();
-            setToast({
-                type: "error",
-                text: "Please complete registration before logging in."
-            })
-            return;
-        }
 
         e.preventDefault();
         setLoading(true);
         setToast({});
 
         try {
-            const { data } = await api.post("/auth/login", form, {
-                headers: {Authorization: `Bearer`}
-            });
+            const { data } = await api.post("/auth/login", form);
             setToast({
                 type: "success",
                 text: data.message
             });
+            navigate("/home");
         } catch (err) {
             const data = err.response?.data ?? { error: "Something went wrong" };
             console.error("Could not login:", err);
+            setLoading(false);
+            if (data.code === "ACCOUNT_UNVERIFIED") {
+                localStorage.setItem("email", data.email)
+                setTimeout(() => {
+                    navigate("/auth/otp_verification")
+                }, 1500);
+            }
             setToast({
                 type: "failure",
                 text: data.error
@@ -72,13 +60,6 @@ export default function Login() {
             setTimeout(() => {
                 setToast({})
             }, 3000);
-        } finally {
-            setLoading(false);
-            setForm({
-                name: "",
-                email: "",
-                password: ""
-            });
         }
     }
 
@@ -97,9 +78,6 @@ export default function Login() {
             )}
 
             <form className="space-y-5" onSubmit={handleLogin}>
-                <InputHolder id="name" label="Full Name" type="text" value={form.name} required
-                    placeholder="Full Name" onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))}
-                />
                 <InputHolder id="email" label="Email" type="email" value={form.email} required
                     placeholder="someone@example.com" onChange={(e) => setForm(prev => ({ ...prev, email: e.target.value.trim() }))}
                 />

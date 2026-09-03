@@ -23,15 +23,15 @@ export default function Header() {
     // EFFECTS & FUNCTIONS ======================
     // ============================================================================================
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setLikeCount(prev => {
-                return prev + 1
-            })
-        }, 1000);
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         setLikeCount(prev => {
+    //             return prev + 1
+    //         })
+    //     }, 1000);
 
-        return () => clearInterval(interval)
-    }, [])
+    //     return () => clearInterval(interval)
+    // }, [])
 
     return (
         <header className="header flex sticky top-0 z-9999 border-b border-b-gray-400 justify-between items-center py-4 pl-6 pr-4 backdrop-blur-xl">

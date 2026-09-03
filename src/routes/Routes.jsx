@@ -22,7 +22,7 @@ export default function RoutePage() {
             <Route element={<ProtectedRoutes />}>
                 <Route path="/" element={<MainLayout />}>
                     <Route index element={<Home />} />
-                    <Route path="products" element={<Home />} />
+                    <Route path="home" element={<Home />} />
                     <Route path="products/:id" element={<ProductPage />} />
                     <Route path="categories" element={<Categories />} />
                     <Route path="categories/:category" element={<Category />} />
