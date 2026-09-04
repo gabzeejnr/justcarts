@@ -23,7 +23,7 @@ export default function ProtectedRoutes() {
         }
     }
 
-    if(checkingAuth) return <div>
+    if(checkingAuth) return <div className="h-screen grid place-items-center">
         <img src={Loader} alt="Loading..." width="100" />
     </div>
 
