@@ -6,6 +6,7 @@ import { brandLogo, brandName } from "../../data/companyData";
 import { Heart, ShoppingBag, ShoppingCart, User } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import Account from "./Account";
 
 export default function Header() {
 
@@ -42,6 +43,7 @@ export default function Header() {
                 <SearchBar className="search_form_wrapper hidden sm:block relative w-2/3" />
             </div>
             <div className="right_items flex items-center gap-4">
+                <Account />
                 <button className="relative">
                     <div className="bg-[#0AAD0A] h-4 text-xs px-1 rounded-4xl text-white
                         absolute -top-2 left-1/2">{likeCount}</div>

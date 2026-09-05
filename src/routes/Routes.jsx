@@ -10,6 +10,7 @@ import ProductPage from "../pages/ProductPage";
 import Categories from "../pages/Categories";
 import Category from "../pages/Category";
 import Cart from "../pages/Cart";
+import Settings from "../pages/Settings";
 
 export default function RoutePage() {
     return (
@@ -27,6 +28,7 @@ export default function RoutePage() {
                     <Route path="categories" element={<Categories />} />
                     <Route path="categories/:category" element={<Category />} />
                     <Route path="cart" element={<Cart />} />
+                    <Route path="settings" element={<Settings />} />
                 </Route>
             </Route>
         </Routes>

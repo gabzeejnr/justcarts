@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 html {
-    scrollbar-width: none;
+    scrollbar-width: thin;
 }
 
 .hero {
