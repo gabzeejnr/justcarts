@@ -16,7 +16,7 @@ function AccountDropDown({ setIsToggled }) {
     ];
 
     return (
-        <div className="flex flex-col absolute font-semibold top-18 px-3 w-40 text-center bg-[#0AAD0A]">
+        <div className="flex flex-col absolute font-semibold top-18 px-3 w-40 text-center bg-primary">
             {items.map(i => {
                 const t = i.name === "Settings"
                     ? <NavLink to={i.link} className="w-full py-2"
@@ -35,14 +35,13 @@ export default function Account() {
 
     return (
         <>
-            <div className="hidden md:block cursor-pointer gap-2 px-3 py-2 bg-[#0AAD0A] rounded-sm">
+            <div className="hidden md:block cursor-pointer gap-2 px-3 py-2 bg-primary rounded-sm">
                 <button type="button" className="flex cursor-pointer items-center gap-3"
                     onClick={() => setIsToggled(prev => !prev)}>
                     <span className="inline-flex items-center gap-2">
                         <div className="bg-white rounded-[50%] h-7 w-7 flex items-center justify-center"><User /></div>
                         {user.name}</span>
-                    <span className="text-white">{isToggled ? <>&#x25B2;</> : <>&#9660;</>
-                    }</span>
+                    <span className="text-white">{isToggled ? <>&#x25B2;</> : <>&#9660;</>}</span>
                 </button>
             </div>
             {isToggled && <AccountDropDown setIsToggled={setIsToggled} />}

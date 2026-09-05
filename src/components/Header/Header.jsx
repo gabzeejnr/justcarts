@@ -45,7 +45,7 @@ export default function Header() {
             <div className="right_items flex items-center gap-4">
                 <Account />
                 <button className="relative">
-                    <div className="bg-[#0AAD0A] h-4 text-xs px-1 rounded-4xl text-white
+                    <div className="bg-primary h-4 text-xs px-1 rounded-4xl text-white
                         absolute -top-2 left-1/2">{likeCount}</div>
                     <Heart />
                 </button>
@@ -54,8 +54,8 @@ export default function Header() {
                 </button>
                 <button className="relative cursor-pointer"
                     onClick={() => navigate("/cart")}>
-                    <div className={`bg-[#0AAD0A] h-4 text-xs px-1 rounded-4xl text-white
-                        absolute -top-2 left-1/2 `}>{cart.length}</div>
+                    <div className={`bg-primary h-4 text-xs px-1 rounded-4xl text-white absolute -top-2 left-1/2 `}
+                    >{cart.length}</div>
                     <ShoppingBag />
                 </button>
                 <button className="md:hidden text-2xl">

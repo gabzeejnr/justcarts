@@ -1,9 +1,19 @@
-import { createContext, useContext, } from "react";
+import { createContext, useContext, useEffect, useState, } from "react";
 
 const ThemeContext = createContext(null);
 
 export default function ThemeProvider({ children }) {
-    const value = {};
+
+    const [theme, setTheme] = useState(() => {
+        const prefersDark =window.matchMedia("(prefers-color-scheme: dark)").matches;
+        return prefersDark ? "dark" : "light"
+    });
+
+    useEffect(() => {
+        document.body.classList.toggle("dark", theme === "dark")
+    }, [theme])
+
+    const value = { setTheme };
 
     return (
         <ThemeContext.Provider value={value}>

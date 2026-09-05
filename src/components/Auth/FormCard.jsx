@@ -8,7 +8,7 @@ export default function FormCard({ children }) {
             <div className="w-full max-w-md">
                 <div className="text-center mb-5">
                     <h1 className="text-2xl font-bold">IT'S JUST CARTS {""}
-                        <FontAwesomeIcon icon={faCartShopping} color="#0AAD0A" />
+                        <FontAwesomeIcon icon={faCartShopping} className="text-primary" />
                     </h1>
                 </div>
                 <div className="bg-white rounded-2xl p-6 sm:p-3 shadow-sm">

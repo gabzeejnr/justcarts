@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function InputHolder({ id, label, type, value, placeholder, onChange, required }) {
 
     const labelStyle = "block text-sm font-medium text-gray-700 mb-1"
-    const inputStyle = "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-[#0AAD0A] focus:ring-1 focus:ring-[#0AAD0A]";
+    const inputStyle = "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-primary focus:ring-1 focus:ring-primary";
 
     return (
         <div>
